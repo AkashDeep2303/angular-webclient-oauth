@@ -31,15 +31,29 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/config.json",
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "src/app/core/auth-callback/",
+                "output": "/assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/static/",
+                "output": "/assets"
+              },
+              {
+                "glob": "oidc-client-ts.min.js",
+                "input": "node_modules/oidc-client-ts/dist/browser",
+                "output": "/assets"
               }
             ],
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/oidc-client-ts/dist/browser/oidc-client-ts.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -59,6 +73,7 @@
             },
             "development": {
               "optimization": false,
+              "namedChunks": true,
               "extractLicenses": false,
               "sourceMap": true
             }
@@ -75,7 +90,11 @@
               "buildTarget": "POC-WebClient:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4200,
+            "publicHost": "http://localhost:4200"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"
@@ -102,5 +121,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

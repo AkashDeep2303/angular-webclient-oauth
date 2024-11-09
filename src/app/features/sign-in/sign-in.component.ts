@@ -1,29 +1,27 @@
 declare var google: any; // Avoid TypeScript errors on `google`
-
-import { Component, OnInit } from '@angular/core';
-import { ConfigService } from './core/config.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrl: './sign-in.component.css'
 })
-export class AppComponent implements OnInit {
-  title = 'POC-WebClient';
+export class SignInComponent {
 
-  constructor(private readonly configService:ConfigService, private readonly router: Router) {}
+  constructor(private readonly router:Router){
+    
+  }
 
   ngOnInit(): void {
-      // Check for google object, retry if needed
-      if(!!sessionStorage.getItem('id_token')){
-        this.router.navigate(['home']);
-      }
-      else{
-        this.router.navigate(['sign-in']);
-        this.waitForGoogleScript(() => this.initializeGoogleSignIn());
-      }
-      
+    // Check for google object, retry if needed
+    if(!!sessionStorage.getItem('id_token')){
+      this.router.navigate(['home']);
+    }
+    else{
+      this.waitForGoogleScript(() => this.initializeGoogleSignIn());
+    }
+    
   }
 
   waitForGoogleScript(callback: () => void) {
@@ -35,7 +33,7 @@ export class AppComponent implements OnInit {
         callback();
       } else if (attempts < maxRetries) {
         attempts++;
-        setTimeout(checkGoogle, 500); // Retry every 500ms
+        setTimeout(checkGoogle, 500);
       } else {
         console.error('Google script did not load.');
       }
@@ -72,4 +70,5 @@ export class AppComponent implements OnInit {
     }
     
   }
+
 }

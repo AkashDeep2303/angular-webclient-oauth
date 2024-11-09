@@ -1,0 +1,6 @@
+{
+    "oAuthToken": "id_token",
+    "baseUrl": "https://localhost:44324/api/",
+    "value": "1",
+    "value2": "2"
+}
